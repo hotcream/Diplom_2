@@ -1,9 +1,5 @@
-import api.Base;
-import api.CreateUser;
-import api.DeleteUser;
-import api.Login;
+import api.*;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -13,13 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-
-public class LoginTest {
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
+public class LoginTest extends Config {
 
     @Before
     public void createTestUser() {
@@ -92,5 +82,4 @@ public class LoginTest {
 
         assertThat(messageWithBadEmailPassword, equalTo("email or password are incorrect"));
     }
-
 }

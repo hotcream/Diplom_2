@@ -1,23 +1,14 @@
-import api.Base;
-import api.CreateUser;
-import api.DeleteUser;
+import api.*;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class CreateUserTest {
+public class CreateUserTest extends Config {
 
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
-
-   @After
+    @After
     public void deleteTestUser() {
         DeleteUser.deleteUserAfterTests();
     }
@@ -26,6 +17,7 @@ public class CreateUserTest {
     @DisplayName("Проверка создания пользователя")
     public void createUserTest() {
         Response response = CreateUser.createUser(CreateUser.registerRequestBody());
+        CreateUser.userToken = Login.userToken();
         response
                 .then()
                 .assertThat()
@@ -37,7 +29,7 @@ public class CreateUserTest {
     public void createTwoSameUsersTest() {
         CreateUser.createUser(CreateUser.registerRequestBody());
         Response response = CreateUser.createUser(CreateUser.registerRequestBody());
-
+        CreateUser.userToken = Login.userToken();
         response
                 .then()
                 .assertThat()

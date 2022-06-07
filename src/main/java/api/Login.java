@@ -3,13 +3,10 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.LOGIN;
 import static io.restassured.RestAssured.given;
 
 public class Login {
-
-    static String userName = Base.createUserName();
-    static String userPassword = Base.createPassword();
-    static String userMail = Base.createMail();
 
     @Step("Авторизация")
     public static Response login(String body) {
@@ -19,7 +16,7 @@ public class Login {
                 .and()
                 .body(body)
                 .when()
-                .post("/api/auth/login");
+                .post(LOGIN);
     }
 
     @Step("Авторизация для получения токена")
@@ -29,6 +26,8 @@ public class Login {
                 .then()
                 .extract()
                 .path("accessToken");
+
+        System.out.println(token);
         return token.substring(7);
     }
 
@@ -52,12 +51,5 @@ public class Login {
         return "{\"email\":\"" + CreateUser.userPassword + "\","
                 + "\"password\":\"" + CreateUser.userName + "\"}";
     }
-
-/*    @Step("Тело запроса регистрации пользователя")
-    public static String testPositiveUser() {
-
-        return "{\"password\":\"" + userPassword + "\","
-                + "\"email\":\"" + userMail + "\"}";
-    }*/
 
 }

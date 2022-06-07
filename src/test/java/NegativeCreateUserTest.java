@@ -1,26 +1,20 @@
-import api.Base;
+import api.Config;
 import api.CreateUser;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class NegativeCreateUserTest {
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
+public class NegativeCreateUserTest extends Config {
 
     @Test
     @DisplayName("Попытка создания пользователя без имени")
     public void createUserWithoutNameTest() {
 
         Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutName());
+
         String messageWithoutName = response
                 .then()
                 .assertThat()
@@ -37,6 +31,7 @@ public class NegativeCreateUserTest {
     public void createUserWithoutPasswordTest() {
 
         Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutPassword());
+
         String messageWithoutPassword =
                 response
                         .then()

@@ -1,6 +1,5 @@
 import api.*;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,12 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UserOrderListTest {
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
+public class UserOrderListTest extends Config {
 
     @Before
     public void createTestUser() {
@@ -51,7 +45,7 @@ public class UserOrderListTest {
     public void getOrderWithAuthorization() {
         Order.order(Login.userToken(), Order.positiveOrderBody());
         ArrayList<LinkedHashMap> testBody = UserOrderList
-                .userOrderList(Login.userToken())
+                .userOrderList(CreateUser.userToken)
                 .then()
                 .assertThat()
                 .statusCode(200)

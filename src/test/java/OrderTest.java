@@ -1,6 +1,5 @@
 import api.*;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-public class OrderTest {
-
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
+public class OrderTest extends Config {
 
     @Before
     public void createTestUser() {
@@ -32,7 +25,7 @@ public class OrderTest {
     public void createPositiveOrder() {
 
         String name = Order
-                .order(Login.userToken(), Order.positiveOrderBody())
+                .order(CreateUser.userToken, Order.positiveOrderBody())
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -56,7 +49,7 @@ public class OrderTest {
     @DisplayName("Создание заказа без ингредиентов")
     public void createOrderWithoutIngredients() {
         String message = Order
-                .order(Login.userToken(), Order.orderBodyWithoutIngredients())
+                .order(CreateUser.userToken, Order.orderBodyWithoutIngredients())
                 .then()
                 .assertThat()
                 .statusCode(400)

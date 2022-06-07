@@ -3,6 +3,7 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.INGREDIENTS;
 import static io.restassured.RestAssured.given;
 
 public class Ingredient {
@@ -15,6 +16,6 @@ public class Ingredient {
                 .auth().oauth2(token)
                 .and()
                 .when()
-                .get("/api/ingredients");
+                .get(INGREDIENTS);
     }
 }

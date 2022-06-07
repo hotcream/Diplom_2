@@ -3,6 +3,7 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.ORDERS;
 import static io.restassured.RestAssured.given;
 
 public class Order {
@@ -16,7 +17,7 @@ public class Order {
                 .and()
                 .body(body)
                 .when()
-                .post("/api/orders");
+                .post(ORDERS);
     }
 
 
@@ -28,12 +29,12 @@ public class Order {
                 .and()
                 .body(body)
                 .when()
-                .post("/api/orders");
+                .post(ORDERS);
     }
     @Step("Получение первого ингредиента")
     public static String firstIngredient() {
         return Ingredient
-                .ingredient(Login.userToken())
+                .ingredient(CreateUser.userToken)
                 .then()
                 .extract()
                 .path("data[0]._id");
@@ -42,7 +43,7 @@ public class Order {
     @Step("Получение второго ингредиента")
     public static String secondIngredient() {
         return Ingredient
-                .ingredient(Login.userToken())
+                .ingredient(CreateUser.userToken)
                 .then()
                 .extract()
                 .path("data[1]._id");

@@ -3,6 +3,8 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.ACCESS_TOKEN;
+import static api.Base.REGISTER;
 import static io.restassured.RestAssured.given;
 
 public class CreateUser {
@@ -10,6 +12,7 @@ public class CreateUser {
     static String userName = Base.createUserName();
     static String userPassword = Base.createPassword();
     static String userMail = Base.createMail();
+    public static String userToken;
 
     @Step("Создание пользователя")
     public static Response createUser(String body) {
@@ -19,7 +22,7 @@ public class CreateUser {
                 .and()
                 .body(body)
                 .when()
-                .post("/api/auth/register");
+                .post(REGISTER);
     }
 
     @Step("Создание тела для регистрации")
@@ -53,5 +56,6 @@ public class CreateUser {
 
     public static void createUserBeforeTests() {
         createUser(registerRequestBody());
+        userToken = Login.userToken();
     }
 }

@@ -2,6 +2,7 @@ package api;
 
 import io.qameta.allure.Step;
 
+import static api.Base.USER;
 import static io.restassured.RestAssured.given;
 
 public class DeleteUser {
@@ -12,15 +13,10 @@ public class DeleteUser {
         given()
                 .auth().oauth2(token)
                 .when()
-                .delete("/api/auth/user");
+                .delete(USER);
     }
 
     public static void deleteUserAfterTests() {
-        String token = Login.login(CreateUser.registerRequestBody())
-                .then()
-                .extract()
-                .path("accessToken");
-
-        DeleteUser.deleteUser(token.substring(7));
+        DeleteUser.deleteUser(CreateUser.userToken);
     }
 }

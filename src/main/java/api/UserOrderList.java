@@ -3,6 +3,7 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.ORDERS;
 import static io.restassured.RestAssured.given;
 
 public class UserOrderList {
@@ -14,6 +15,6 @@ public class UserOrderList {
                 .auth().oauth2(token)
                 .and()
                 .when()
-                .get("/api/orders");
+                .get(ORDERS);
     }
 }

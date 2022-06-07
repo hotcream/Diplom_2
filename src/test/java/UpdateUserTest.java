@@ -1,21 +1,13 @@
 import api.*;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static api.Login.userToken;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-
-public class UpdateUserTest {
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = Base.BASE_URL;
-    }
+public class UpdateUserTest extends Config {
 
     @Before
     public void createTestUser() {
@@ -33,7 +25,7 @@ public class UpdateUserTest {
     public void updateMailWithAuthorizationTest() {
 
         boolean success = UpdateUser
-                .patchUser(Login.userToken(), UpdateUser.testPositiveUserMail())
+                .patchUser(CreateUser.userToken, UpdateUser.testPositiveUserMail())
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -50,7 +42,7 @@ public class UpdateUserTest {
     public void updateNameWithAuthorizationTest() {
 
         boolean success = UpdateUser
-                .patchUser(userToken(), UpdateUser.testPositiveUserName())
+                .patchUser(CreateUser.userToken, UpdateUser.testPositiveUserName())
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -67,7 +59,7 @@ public class UpdateUserTest {
     public void updatePasswordWithAuthorizationTest() {
 
         boolean success = UpdateUser
-                .patchUser(userToken(), UpdateUser.testPositiveUserPassword())
+                .patchUser(CreateUser.userToken, UpdateUser.testPositiveUserPassword())
                 .then()
                 .assertThat()
                 .statusCode(200)

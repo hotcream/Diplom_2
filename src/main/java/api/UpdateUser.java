@@ -3,6 +3,8 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
+import static api.Base.ACCESS_TOKEN;
+import static api.Base.USER;
 import static io.restassured.RestAssured.given;
 
 public class UpdateUser {
@@ -16,7 +18,7 @@ public class UpdateUser {
                 .and()
                 .body(body)
                 .when()
-                .patch("/api/auth/user");
+                .patch(USER);
     }
 
     @Step("Тело для изменения имени")
@@ -32,18 +34,18 @@ public class UpdateUser {
                 + "\"email\":\"" + CreateUser.userMail + "\"}";
     }
 
-    @Step("Авторизация для получения токена")
+ /*   @Step("Авторизация для получения токена")
     public static String userToken() {
 
         String token = Login
                 .login(Login.userToken())
                 .then()
                 .extract()
-                .path("accessToken");
+                .path(ACCESS_TOKEN);
 
         return token.substring(7);
 
-    }
+    }*/
 
     @Step("Тело для изменения email")
     public static String testPositiveUserMail() {
