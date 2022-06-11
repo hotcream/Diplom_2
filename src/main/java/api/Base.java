@@ -4,7 +4,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class Base {
 
-    //public static final String BASE_URL = "https://stellarburgers.nomoreparties.site";
     public static final String INGREDIENTS = "/api/ingredients";
     public static final String ACCESS_TOKEN = "accessToken";
     public static final String REGISTER = "/api/auth/register";

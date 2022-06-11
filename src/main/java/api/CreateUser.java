@@ -3,7 +3,6 @@ package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-import static api.Base.ACCESS_TOKEN;
 import static api.Base.REGISTER;
 import static io.restassured.RestAssured.given;
 
