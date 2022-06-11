@@ -50,7 +50,7 @@ public class Order {
                 .path("data[1]._id");
     }
 
-    @Step("Полечение тела с ингредиентами для позитивного запроса")
+    @Step("Получение тела с ингредиентами для позитивного запроса")
     public static String positiveOrderBody(IngredientData ingredients) {
         ingredients.setIngredients(firstIngredient());
         ingredients.setIngredients(secondIngredient());
@@ -58,7 +58,7 @@ public class Order {
         return gson.toJson(ingredients);
     }
 
-    @Step("Полечение тела с ингредиентами для негативного запроса")
+    @Step("Получение тела с ингредиентами для негативного запроса")
     public static String negativeOrderBody(IngredientData ingredients) {
         ingredients.setIngredients(firstIngredient() + "200");
         ingredients.setIngredients(secondIngredient() + "3000");
@@ -66,7 +66,7 @@ public class Order {
         return gson.toJson(ingredients);
     }
 
-    @Step("Полечение тела без ингредиентов")
+    @Step("Получение тела без ингредиентов")
     public static String orderBodyWithoutIngredients(IngredientData ingredients) {
         Gson gson = new Gson();
         return gson.toJson(ingredients);
