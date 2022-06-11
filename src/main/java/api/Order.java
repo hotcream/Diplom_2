@@ -1,5 +1,6 @@
 package api;
 
+import com.google.gson.Gson;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
@@ -20,7 +21,6 @@ public class Order {
                 .post(ORDERS);
     }
 
-
     @Step("Создание заказа без авторизации")
     public static Response createOrderWithoutLogin(String body) {
 
@@ -31,6 +31,7 @@ public class Order {
                 .when()
                 .post(ORDERS);
     }
+
     @Step("Получение первого ингредиента")
     public static String firstIngredient() {
         return Ingredient
@@ -47,22 +48,27 @@ public class Order {
                 .then()
                 .extract()
                 .path("data[1]._id");
-
     }
 
-    @Step("Тело для позитивного запроса")
-    public static String positiveOrderBody() {
-        return "{\"ingredients\":" + "[" + "\"" + firstIngredient() + "\"" + ", " + "\"" + secondIngredient() + "\"" + "]" + "}";
+    @Step("Полечение тела с ингредиентами для позитивного запроса")
+    public static String positiveOrderBody(IngredientData ingredients) {
+        ingredients.setIngredients(firstIngredient());
+        ingredients.setIngredients(secondIngredient());
+        Gson gson = new Gson();
+        return gson.toJson(ingredients);
     }
 
-    @Step("Тело для негативного запроса")
-    public static String negativeOrderBody() {
-        return "{\"ingredients\":" + "[" + "\"" + firstIngredient() + "200" + "\"" + ", " + "\"" + secondIngredient() + "3000" + "\"" + "]" + "}";
+    @Step("Полечение тела с ингредиентами для негативного запроса")
+    public static String negativeOrderBody(IngredientData ingredients) {
+        ingredients.setIngredients(firstIngredient() + "200");
+        ingredients.setIngredients(secondIngredient() + "3000");
+        Gson gson = new Gson();
+        return gson.toJson(ingredients);
     }
 
-    @Step
-    public static String orderBodyWithoutIngredients() {
-        return "{\"ingredients\":" + "\"" + "\"" + "}";
+    @Step("Полечение тела без ингредиентов")
+    public static String orderBodyWithoutIngredients(IngredientData ingredients) {
+        Gson gson = new Gson();
+        return gson.toJson(ingredients);
     }
-
 }

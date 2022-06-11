@@ -1,7 +1,9 @@
 import api.Config;
 import api.CreateUser;
+import api.UserData;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,11 +11,18 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class NegativeCreateUserTest extends Config {
 
+    UserData userData;
+
+    @Before
+    public void createTestUser() {
+        userData = new UserData();
+    }
+
     @Test
     @DisplayName("Попытка создания пользователя без имени")
     public void createUserWithoutNameTest() {
 
-        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutName());
+        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutName(userData));
 
         String messageWithoutName = response
                 .then()
@@ -30,7 +39,7 @@ public class NegativeCreateUserTest extends Config {
     @DisplayName("Попытка создания пользователя без пароля")
     public void createUserWithoutPasswordTest() {
 
-        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutPassword());
+        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutPassword(userData));
 
         String messageWithoutPassword =
                 response
@@ -47,7 +56,7 @@ public class NegativeCreateUserTest extends Config {
     @DisplayName("Попытка создания пользователя без почты")
     public void createUserWithoutEmailTest() {
 
-        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutEmail());
+        Response response = CreateUser.createUser(CreateUser.registerRequestBodyWithoutEmail(userData));
         String messageWithoutEmail = response
                 .then()
                 .assertThat()

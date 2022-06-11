@@ -13,9 +13,14 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class UserOrderListTest extends Config {
 
+    UserData userData;
+    IngredientData ingredients;
+
     @Before
     public void createTestUser() {
-        CreateUser.createUserBeforeTests();
+        ingredients = new IngredientData();
+        userData = new UserData();
+        CreateUser.createUserBeforeTests(userData);
     }
 
     @After
@@ -43,7 +48,7 @@ public class UserOrderListTest extends Config {
     @Test
     @DisplayName("Получение списка заказов у пользователя с авторизацией")
     public void getOrderWithAuthorization() {
-        Order.order(Login.userToken(), Order.positiveOrderBody());
+        Order.order(CreateUser.userToken, Order.positiveOrderBody(ingredients));
         ArrayList<LinkedHashMap> testBody = UserOrderList
                 .userOrderList(CreateUser.userToken)
                 .then()

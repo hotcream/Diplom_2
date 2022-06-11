@@ -10,9 +10,14 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class OrderTest extends Config {
 
+    UserData userData;
+    IngredientData ingredients;
+
     @Before
     public void createTestUser() {
-        CreateUser.createUserBeforeTests();
+        userData = new UserData();
+        ingredients = new IngredientData();
+        CreateUser.createUserBeforeTests(userData);
     }
 
     @After
@@ -25,7 +30,7 @@ public class OrderTest extends Config {
     public void createPositiveOrder() {
 
         String name = Order
-                .order(CreateUser.userToken, Order.positiveOrderBody())
+                .order(CreateUser.userToken, Order.positiveOrderBody(ingredients))
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -39,7 +44,7 @@ public class OrderTest extends Config {
     @DisplayName("Создание заказа без авторизации")
     public void createOrderWithoutLogin() {
         Order
-                .createOrderWithoutLogin(Order.positiveOrderBody())
+                .createOrderWithoutLogin(Order.positiveOrderBody(ingredients))
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -49,7 +54,7 @@ public class OrderTest extends Config {
     @DisplayName("Создание заказа без ингредиентов")
     public void createOrderWithoutIngredients() {
         String message = Order
-                .order(CreateUser.userToken, Order.orderBodyWithoutIngredients())
+                .order(CreateUser.userToken, Order.orderBodyWithoutIngredients(ingredients))
                 .then()
                 .assertThat()
                 .statusCode(400)
@@ -64,7 +69,7 @@ public class OrderTest extends Config {
     @DisplayName("Успешное создание заказа с авторизацией и неверными ингредиентами")
     public void createOrderWithBadIngredients() {
         Order
-                .order(Login.userToken(), Order.negativeOrderBody())
+                .order(CreateUser.userToken, Order.negativeOrderBody(ingredients))
                 .then()
                 .assertThat()
                 .statusCode(500);

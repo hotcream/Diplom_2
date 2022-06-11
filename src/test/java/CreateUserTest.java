@@ -16,8 +16,9 @@ public class CreateUserTest extends Config {
     @Test
     @DisplayName("Проверка создания пользователя")
     public void createUserTest() {
-        Response response = CreateUser.createUser(CreateUser.registerRequestBody());
-        CreateUser.userToken = Login.userToken();
+        UserData userData = new UserData();
+        Response response = CreateUser.createUser(CreateUser.registerRequestBody(userData));
+        CreateUser.userToken = Login.userToken(CreateUser.registerRequestBody(userData));
         response
                 .then()
                 .assertThat()
@@ -27,9 +28,10 @@ public class CreateUserTest extends Config {
     @Test
     @DisplayName("Попытка создать пользователя, который уже зарегистрирован")
     public void createTwoSameUsersTest() {
-        CreateUser.createUser(CreateUser.registerRequestBody());
-        Response response = CreateUser.createUser(CreateUser.registerRequestBody());
-        CreateUser.userToken = Login.userToken();
+        UserData userData = new UserData();
+        CreateUser.createUser(CreateUser.registerRequestBody(userData));
+        Response response = CreateUser.createUser(CreateUser.registerRequestBody(userData));
+        CreateUser.userToken = Login.userToken(CreateUser.registerRequestBody(userData));
         response
                 .then()
                 .assertThat()

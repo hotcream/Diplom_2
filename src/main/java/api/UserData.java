@@ -2,41 +2,45 @@ package api;
 
 public class UserData {
 
-    private String userName;
-    private String userMail;
-    private String userPassword;
+    private String email;
+    private String password;
+    private String name;
 
     public UserData(String userName, String userMail, String userPassword) {
-        this.userName = userName;
-        this.userMail = userMail;
-        this.userPassword = userPassword;
+        this.name = userName;
+        this.email = userMail;
+        this.password = userPassword;
     }
 
     public UserData() {
+        this.name = Base.createUserName();
+        this.email = Base.createMail();
+        this.password = Base.createPassword();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserMail() {
-        return userMail;
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserMail(String userMail) {
-        this.userMail = userMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 }

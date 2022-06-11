@@ -11,9 +11,12 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class LoginTest extends Config {
 
+    UserData userData;
+
     @Before
     public void createTestUser() {
-        CreateUser.createUserBeforeTests();
+        userData = new UserData();
+        CreateUser.createUserBeforeTests(userData);
     }
 
     @After
@@ -24,7 +27,7 @@ public class LoginTest extends Config {
     @Test
     @DisplayName("Авторизация пользователя")
     public void loginTest() {
-        Response response = Login.login(CreateUser.registerRequestBody());
+        Response response = Login.login(CreateUser.registerRequestBody(userData));
         String token = response
                 .then()
                 .assertThat()
@@ -39,7 +42,7 @@ public class LoginTest extends Config {
     @DisplayName("Попытка авторизации с неправильной почтой")
     public void loginWithBadLoginTest() {
 
-        Response response = Login.login(Login.requestBodyLoginWithBadEmail());
+        Response response = Login.login(Login.requestBodyLoginWithBadEmail(userData));
         String messageWithBadLogin = response
                 .then()
                 .assertThat()
@@ -55,7 +58,7 @@ public class LoginTest extends Config {
     @DisplayName("Попытка авторизации с неправильным паролем")
     public void loginWithBadPasswordTest() {
 
-        Response response = Login.login(Login.requestBodyLoginWithBadPassword());
+        Response response = Login.login(Login.requestBodyLoginWithBadPassword(userData));
         String messageWithBadPassword = response
                 .then()
                 .assertThat()
@@ -71,7 +74,7 @@ public class LoginTest extends Config {
     @DisplayName("Попытка авторизации с неправильными почтой и паролем")
     public void loginWithBadEmailPasswordTest() {
 
-        Response response = Login.login(Login.requestBodyLoginWithBadEmailAndPassword());
+        Response response = Login.login(Login.requestBodyLoginWithBadEmailAndPassword(userData));
         String messageWithBadEmailPassword = response
                 .then()
                 .assertThat()
